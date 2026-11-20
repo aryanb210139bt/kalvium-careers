@@ -141,12 +141,59 @@ def ul_section(title, items):
     return f'<section class="card"><h2>{esc(title)}</h2><ul>{lis}</ul></section>'
 
 
+def build_apply_page(site, j, url, image, assets):
+    """Shows the application form inside our own page. Linking straight to script.google.com
+    breaks on Android: the Google Drive app grabs those links and shows 'unable to open the file'."""
+    t = esc(f'Apply – {j["title"]} – {j["city"]} | {site["site_name"]}')
+    form = esc(j["application_url"])
+    return f"""<!doctype html>
+<html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>{t}</title>
+<meta name="robots" content="noindex">
+<link rel="canonical" href="{esc(url)}">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="{esc(site["site_name"])}">
+<meta property="og:title" content="{esc(site["share_title"])}">
+<meta property="og:description" content="{esc(share_description(j))}">
+<meta property="og:url" content="{esc(url)}">
+<meta property="og:image" content="{esc(image)}">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="theme-color" content="#0A0A0C">
+<link rel="icon" type="image/png" href="{assets}/favicon.png">
+<link rel="stylesheet" href="{assets}/site.css">
+<style>
+html,body{{height:100%}}
+body{{display:flex;flex-direction:column;height:100dvh;overflow:hidden}}
+.bar{{display:flex;align-items:center;gap:12px;padding:10px 16px;border-bottom:1px solid var(--line);background:rgba(10,10,12,.9);flex:none}}
+.bar .brand{{font-size:17px}}.bar .brand img{{height:26px}}
+.bar .back{{margin-left:auto;font-size:14px;color:var(--mute);text-decoration:none;white-space:nowrap}}
+.bar .back:hover{{color:var(--txt)}}
+.frame{{flex:1;position:relative;background:var(--bg)}}
+.frame iframe{{position:absolute;inset:0;width:100%;height:100%;border:0;background:transparent}}
+.load{{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;color:var(--mute);font-size:15px}}
+</style></head>
+<body>
+<div class="bar">
+  <a class="brand" href="{esc(url)}"><img src="{assets}/kalvium-logo.png" alt="Kalvium logo">Kalvium</a>
+  <a class="back" href="{esc(url)}">← Back to job</a>
+</div>
+<div class="frame">
+  <div class="load" id="load">Loading application form…</div>
+  <iframe src="{form}" title="Application form" allow="clipboard-write" onload="document.getElementById('load').style.display='none'"></iframe>
+</div>
+</body></html>
+"""
+
+
 def build_job_page(job_tpl, site, j, url, image, assets, home):
     closed = j["status"] == "closed"
     desc = share_description(j)
     split = (f'{j["fixed_salary"]} fixed + {j["variable_salary"]} variable'
              if j.get("fixed_salary") and j.get("variable_salary") else "")
-    apply_btns = (f'<div class="btns"><a class="btn p" href="{esc(j["application_url"])}" rel="noopener">Apply now →</a>'
+    apply_btns = (f'<div class="btns"><a class="btn p" href="{esc(url)}apply/">Apply now →</a>'
                   + (f'<a class="btn s" href="{esc(j["jd_url"])}" rel="noopener">View full JD</a>' if j.get("jd_url") else "")
                   + "</div>")
     addr = (f'<section class="card"><h2>Work location</h2><p class="addr">{esc(j["address"])}</p></section>'
@@ -253,6 +300,10 @@ def main():
         d = OUT / "careers" / j["slug"]
         d.mkdir(parents=True)
         (d / "index.html").write_text(page, encoding="utf-8")
+        if j["status"] == "active":
+            (d / "apply").mkdir()
+            (d / "apply" / "index.html").write_text(build_apply_page(site, j, url, image, f"{base}/assets"),
+                                                   encoding="utf-8")
         built.append(j)
         report.append(f'  {j["status"]:<6} {url}   (poster {kb:.0f} KB)')
 
