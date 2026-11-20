@@ -1,0 +1,156 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>Job Poster Builder – Kalvium Careers (HR)</title>
+<link rel="icon" type="image/png" href="../assets/favicon.png">
+<link rel="stylesheet" href="../assets/site.css">
+<style>
+.in{max-width:1100px}
+.layout{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.15fr);gap:24px;align-items:start;margin-top:10px}
+form .row{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+label{display:block;font-size:13px;font-weight:600;color:#C9C9CF;margin:12px 0 5px}
+label em{color:var(--red);font-style:normal}
+input,select,textarea{width:100%;background:var(--s1);border:1px solid var(--line);border-radius:10px;color:var(--txt);font:inherit;font-size:15px;padding:10px 12px}
+textarea{min-height:78px;resize:vertical}
+input:focus,select:focus,textarea:focus{outline:2px solid rgba(242,35,42,.6);border-color:transparent}
+.hint{font-size:12.5px;color:var(--mute);margin-top:4px}
+.sticky{position:sticky;top:16px}
+.pv{position:relative;width:100%;aspect-ratio:1200/630;border-radius:14px;overflow:hidden;border:1px solid var(--line);background:#000}
+.pv iframe{position:absolute;left:0;top:0;width:1200px;height:630px;border:0;transform-origin:0 0}
+.wa{background:#0B141A;border-radius:14px;padding:12px;margin-top:14px}
+.wa .b{background:#005C4B;border-radius:10px;padding:4px;max-width:420px;margin-left:auto;color:#E9EDEF;font-size:14px}
+.wa .pc{background:#025144;border-radius:7px;overflow:hidden}
+.wa .pc .img{aspect-ratio:1200/630;position:relative;overflow:hidden}
+.wa .pc .img iframe{position:absolute;left:0;top:0;width:1200px;height:630px;border:0;transform-origin:0 0;pointer-events:none}
+.wa .pc .t{padding:8px 10px}.wa .pc .t b{display:block;font-size:14px}.wa .pc .t span{font-size:12.5px;opacity:.75;display:block}
+.wa .pc .t i{font-style:normal;font-size:12px;opacity:.6}
+.wa .u{padding:6px 8px 2px;color:#53BDEB;word-break:break-all;font-size:13.5px}
+pre{background:var(--s1);border:1px solid var(--line);border-radius:12px;padding:14px;font-size:12.5px;line-height:1.5;overflow:auto;max-height:260px;white-space:pre-wrap;word-break:break-word}
+.steps{color:#C9C9CF;font-size:14.5px;margin:10px 0 0 18px}
+.steps li{margin:4px 0}
+h2{margin-top:22px}
+.err{color:#FF6B6F;font-size:13.5px;margin-top:8px;min-height:1em}
+@media (max-width:900px){.layout{grid-template-columns:1fr}.sticky{position:static}}
+</style></head>
+<body>
+<header class="top"><div class="in"><a class="brand" href="../careers/"><img src="../assets/kalvium-logo.png" alt="Kalvium logo">Kalvium <span>HR · Poster builder</span></a></div></header>
+<main class="in">
+<p class="lead" style="margin-top:4px">Fill in the role. The poster and WhatsApp preview update live. When it looks right, copy the job entry and add it to <b>jobs.json</b> on GitHub — the site rebuilds itself in about a minute.</p>
+<div class="layout">
+<form id="f" autocomplete="off">
+  <label>Start from an existing job</label>
+  <select id="load"><option value="">— New job —</option></select>
+
+  <label>Job title <em>*</em></label><input name="title" placeholder="Academic Relationship Manager (ARM) – Counsellor">
+  <div class="row">
+    <div><label>Poster title <em>*</em></label><input name="poster_title" placeholder="Academic Relationship Manager"><div class="hint">Shorter title for the image.</div></div>
+    <div><label>Poster subtitle</label><input name="poster_subtitle" placeholder="ARM – Counsellor"></div>
+  </div>
+  <div class="row">
+    <div><label>Department</label><input name="department" placeholder="Admissions"></div>
+    <div><label>Employment type</label><select name="employment_type"><option>Full-time</option><option>Part-time</option><option>Internship</option><option>Contract</option></select></div>
+  </div>
+  <div class="row">
+    <div><label>City <em>*</em></label><input name="city" placeholder="Noida"></div>
+    <div><label>Location (area) <em>*</em></label><input name="location" placeholder="Noida, Sector 2"></div>
+  </div>
+  <label>Full office address</label><input name="address" placeholder="Building, street, city – PIN">
+  <div class="row">
+    <div><label>Work mode <em>*</em></label><select name="work_mode"><option>Work from Office</option><option>Hybrid</option><option>Remote</option></select></div>
+    <div><label>Languages</label><input name="languages" placeholder="English and Hindi"></div>
+  </div>
+  <div class="row">
+    <div><label>Experience <em>*</em></label><input name="experience" placeholder="0–3 Years"></div>
+    <div><label>Experience note</label><input name="experience_note" placeholder="Freshers welcome"></div>
+  </div>
+  <div class="row">
+    <div><label>CTC <em>*</em></label><input name="ctc" placeholder="₹5 LPA"></div>
+    <div class="row" style="gap:8px">
+      <div><label>Fixed</label><input name="fixed_salary" placeholder="₹4 LPA"></div>
+      <div><label>Variable</label><input name="variable_salary" placeholder="₹1 LPA"></div>
+    </div>
+  </div>
+  <label>Short description <em>*</em></label><textarea name="description" placeholder="One or two sentences about the role."></textarea>
+  <label>What you'll do <span class="hint">(one per line)</span></label><textarea name="highlights"></textarea>
+  <label>Who we're looking for <span class="hint">(one per line)</span></label><textarea name="requirements"></textarea>
+  <label>Application link <em>*</em></label><input name="application_url" placeholder="https://…">
+  <label>Full JD link</label><input name="jd_url" placeholder="https://drive.google.com/…">
+  <div class="row">
+    <div><label>URL slug <em>*</em></label><input name="slug" placeholder="auto from title + city"><div class="hint">Lowercase, hyphens. Never change it after sharing.</div></div>
+    <div><label>Status</label><select name="status"><option value="active">active (live)</option><option value="draft">draft (hidden)</option><option value="closed">closed (stops applications)</option></select></div>
+  </div>
+</form>
+
+<div class="sticky">
+  <h2 style="margin-top:12px">Poster (1200 × 630)</h2>
+  <div class="pv" id="pv"><iframe id="pf" title="Poster preview" sandbox="allow-same-origin"></iframe></div>
+  <h2>Approximate WhatsApp preview</h2>
+  <div class="wa"><div class="b"><div class="pc"><div class="img" id="wi"><iframe id="wf" title="" sandbox="allow-same-origin" tabindex="-1"></iframe></div>
+    <div class="t"><b id="wt"></b><span id="wd"></span><i id="ws"></i></div></div><div class="u" id="wu"></div></div></div>
+  <h2>Job entry for jobs.json</h2>
+  <pre id="out"></pre>
+  <div class="err" id="err"></div>
+  <div class="btns" style="margin-top:10px">
+    <button type="button" class="btn p" id="copy" style="border:0;cursor:pointer">Copy job entry</button>
+    <a class="btn s" id="gh" href="https://github.com/aryanb210139bt/kalvium-careers/edit/main/jobs.json" target="_blank" rel="noopener">Open jobs.json on GitHub ↗</a>
+  </div>
+  <ol class="steps">
+    <li>Click <b>Copy job entry</b>.</li>
+    <li>On GitHub, paste it inside <code>"jobs": [ … ]</code> (add a comma after the previous job's closing <code>}</code>). To edit a job, replace its block.</li>
+    <li>Click <b>Commit changes</b>. In ~1–2 minutes the page and poster are live at the share link shown above.</li>
+  </ol>
+</div>
+</div>
+</main>
+<script>
+var MODE_SHORT={"work from office":"WFO","remote":"Remote","hybrid":"Hybrid","work from home":"WFH"};
+var KEYS=["slug","status","title","poster_title","poster_subtitle","department","city","location","address","work_mode","employment_type","experience","experience_note","ctc","fixed_salary","variable_salary","languages","description","highlights","requirements","application_url","jd_url"];
+var REQ=["title","poster_title","city","location","work_mode","experience","ctc","description","application_url","slug"];
+var f=document.getElementById('f'), tpl='', site={}, jobs=[], slugTouched=false;
+function esc(s){return String(s==null?'':s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;').replace(/'/g,'&#x27;');}
+function head(t){t=esc(t);return /!$/.test(t)?t.slice(0,-1)+'<b>!</b>':t;}
+function slugify(s){return s.toLowerCase().replace(/\(.*?\)/g,'').normalize('NFKD').replace(/[^a-z0-9]+/g,'-').replace(/^-+|-+$/g,'');}
+function job(){var j={};KEYS.forEach(function(k){var v=(f.elements[k].value||'').trim();
+  if(k==='highlights'||k==='requirements'){v=v.split('\n').map(function(x){return x.trim();}).filter(Boolean);if(!v.length)return;}
+  else if(!v&&['slug','status','title','city','location','work_mode','experience','ctc','description','application_url'].indexOf(k)<0)return;
+  j[k]=v;});return j;}
+function fill(v){return tpl.replace(/\{\{(\w+)\}\}/g,function(m,k){return v[k]!=null?v[k]:'';});}
+function scale(){[['pv','pf'],['wi','wf']].forEach(function(p){var w=document.getElementById(p[0]).clientWidth;document.getElementById(p[1]).style.transform='scale('+(w/1200)+')';});}
+function update(){
+  if(!slugTouched){var s=slugify((f.poster_title.value||f.title.value)+' '+f.city.value);f.slug.value=s;}
+  var j=job(), mode=MODE_SHORT[(j.work_mode||'').toLowerCase()]||j.work_mode||'';
+  var footer=[j.employment_type,j.work_mode,j.experience_note].filter(Boolean).join(' · ');
+  var v={assets:'../assets',headline:head(site.headline||"WE'RE HIRING!"),subhead:esc(site.subhead||''),title:esc(j.poster_title||j.title||'Job title'),
+    subtitle:esc(j.poster_subtitle||''),location:esc((j.city||'City')+' · '+mode),experience:esc(j.experience||''),ctc:esc(j.ctc||''),employment:'',work_mode:'',footer:esc(footer)};
+  var doc=fill(v); document.getElementById('pf').srcdoc=doc; document.getElementById('wf').srcdoc=doc;
+  var desc=[j.title,(j.city||'')+' ('+mode+')',j.experience,j.ctc].filter(function(x){return x&&x!==' ()';}).join(' | ');
+  var url=(site.base_url||'').replace(/\/$/,'')+'/careers/'+(j.slug||'')+'/';
+  document.getElementById('wt').textContent=site.share_title||"We're Hiring at Kalvium!";
+  document.getElementById('wd').textContent=desc;
+  document.getElementById('ws').textContent=(site.base_url||'').replace(/^https:\/\//,'').split('/')[0];
+  document.getElementById('wu').textContent=url;
+  document.getElementById('out').textContent=JSON.stringify(j,null,2);
+  var miss=REQ.filter(function(k){return !j[k];}), errs=[];
+  if(miss.length)errs.push('Missing: '+miss.join(', '));
+  if(j.slug&&!/^[a-z0-9]+(-[a-z0-9]+)*$/.test(j.slug))errs.push('Slug: lowercase letters, numbers, hyphens only');
+  ['application_url','jd_url'].forEach(function(k){if(j[k]&&!/^https:\/\//.test(j[k]))errs.push(k+' must start with https://');});
+  var dup=jobs.filter(function(x){return x.slug===j.slug;});
+  if(dup.length&&document.getElementById('load').value!==j.slug)errs.push('A job with this slug already exists — editing it? pick it in "Start from an existing job".');
+  document.getElementById('err').textContent=errs.join(' · ');
+  scale();
+}
+function load(j){KEYS.forEach(function(k){var el=f.elements[k],v=j[k];el.value=Array.isArray(v)?v.join('\n'):(v||(el.tagName==='SELECT'?el.options[0].value:''));});slugTouched=true;update();}
+f.addEventListener('input',function(e){if(e.target.name==='slug')slugTouched=!!e.target.value;update();});
+document.getElementById('load').addEventListener('change',function(){var s=this.value;if(!s){f.reset();slugTouched=false;update();return;}
+  load(jobs.filter(function(x){return x.slug===s;})[0]);});
+document.getElementById('copy').addEventListener('click',function(){var t=document.getElementById('out').textContent,b=this;
+  (navigator.clipboard?navigator.clipboard.writeText(t):Promise.reject()).then(function(){b.textContent='Copied ✓';setTimeout(function(){b.textContent='Copy job entry';},1600);},
+  function(){var r=document.createRange();r.selectNodeContents(document.getElementById('out'));var s=getSelection();s.removeAllRanges();s.addRange(r);b.textContent='Press Ctrl/⌘+C';});});
+window.addEventListener('resize',scale);
+Promise.all([fetch('poster-template.html').then(function(r){return r.text();}),fetch('site.json').then(function(r){return r.json();}),
+  fetch('jobs.json').then(function(r){return r.ok?r.json():{jobs:[]};}).catch(function(){return {jobs:[]};})]).then(function(r){
+  tpl=r[0];site=r[1];jobs=r[2].jobs||[];var sel=document.getElementById('load');
+  jobs.forEach(function(j){var o=document.createElement('option');o.value=j.slug;o.textContent=j.title+' — '+j.city+' ('+j.status+')';sel.appendChild(o);});
+  update();});
+</script>
+</body></html>

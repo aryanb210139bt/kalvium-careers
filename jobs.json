@@ -1,0 +1,108 @@
+{
+  "site": {
+    "base_url": "https://aryanb210139bt.github.io/kalvium-careers",
+    "site_name": "Kalvium Careers",
+    "share_title": "We're Hiring at Kalvium!",
+    "headline": "WE'RE HIRING!",
+    "subhead": "Be a part of the Kalvium Team!",
+    "default_description": "Join the Kalvium team. Explore open roles and apply online."
+  },
+  "jobs": [
+    {
+      "slug": "academic-relationship-manager-noida",
+      "status": "active",
+      "title": "Academic Relationship Manager (ARM) – Counsellor",
+      "poster_title": "Academic Relationship Manager",
+      "poster_subtitle": "ARM – Counsellor",
+      "department": "Admissions",
+      "city": "Noida",
+      "location": "Noida, Sector 2",
+      "address": "Desker Co-working Space, 1st Floor, A-90, Sector-2, Noida, Uttar Pradesh – 201301",
+      "work_mode": "Work from Office",
+      "employment_type": "Full-time",
+      "experience": "0–3 Years",
+      "experience_note": "Freshers welcome",
+      "ctc": "₹5 LPA",
+      "fixed_salary": "₹4 LPA",
+      "variable_salary": "₹1 LPA",
+      "languages": "English and Hindi",
+      "description": "Guide students and parents through the admissions journey and help them make informed career decisions.",
+      "highlights": [
+        "Counsel students and parents through calls, sessions and program walkthroughs.",
+        "Explain programs, university partners, fees, scholarships and career outcomes.",
+        "Guide students from inquiry to enrollment and own admissions targets."
+      ],
+      "requirements": [
+        "Any graduate with strong communication skills in English and Hindi.",
+        "Interest in sales, counselling and talking to students and parents.",
+        "Target-driven, eager to learn and comfortable in a fast-paced role."
+      ],
+      "application_url": "https://script.google.com/macros/s/AKfycbwMUs8jnHRszh_XkLefUL2qIJ5FLsNb29a5K8j-JkmXavL1JrUVEN1fXvp_eu-kbKvE/exec",
+      "jd_url": "https://drive.google.com/file/d/115_Tqv29_ge3HjiSu2LdeNNFUN9s763l/view"
+    },
+    {
+      "slug": "academic-relationship-manager-bengaluru",
+      "status": "active",
+      "title": "Academic Relationship Manager (ARM) – Counsellor",
+      "poster_title": "Academic Relationship Manager",
+      "poster_subtitle": "ARM – Counsellor",
+      "department": "Admissions",
+      "city": "Bengaluru",
+      "location": "Bengaluru, HSR Layout",
+      "address": "H2201, HustleHub, 1st & 2nd Floor, 1196, 22nd Cross Rd, Sector 2, HSR Layout, Bengaluru, Karnataka 560102",
+      "work_mode": "Work from Office",
+      "employment_type": "Full-time",
+      "experience": "0–3 Years",
+      "experience_note": "Freshers welcome",
+      "ctc": "₹5 LPA",
+      "fixed_salary": "₹4 LPA",
+      "variable_salary": "₹1 LPA",
+      "languages": "English and Kannada",
+      "description": "Guide students and parents through the admissions journey and help them make informed career decisions.",
+      "highlights": [
+        "Counsel students and parents through calls, sessions and program walkthroughs.",
+        "Explain programs, university partners, fees, scholarships and career outcomes.",
+        "Guide students from inquiry to enrollment and own admissions targets."
+      ],
+      "requirements": [
+        "Any graduate with strong communication skills in English and Kannada.",
+        "Interest in sales, counselling and talking to students and parents.",
+        "Target-driven, eager to learn and comfortable in a fast-paced role."
+      ],
+      "application_url": "https://script.google.com/macros/s/AKfycbwMUs8jnHRszh_XkLefUL2qIJ5FLsNb29a5K8j-JkmXavL1JrUVEN1fXvp_eu-kbKvE/exec",
+      "jd_url": "https://drive.google.com/file/d/1tVtbv_JtXBC1XIw-8fINbi7LtO6bFfDW/view"
+    },
+    {
+      "slug": "academic-relationship-manager-coimbatore",
+      "status": "active",
+      "title": "Academic Relationship Manager (ARM) – Counsellor",
+      "poster_title": "Academic Relationship Manager",
+      "poster_subtitle": "ARM – Counsellor",
+      "department": "Admissions",
+      "city": "Coimbatore",
+      "location": "Coimbatore, Tamil Nadu",
+      "address": "1A1, Vilankuruchi Road, East Zone, Coimbatore, Tamil Nadu – 641048",
+      "work_mode": "Work from Office",
+      "employment_type": "Full-time",
+      "experience": "0–3 Years",
+      "experience_note": "Freshers welcome",
+      "ctc": "₹5 LPA",
+      "fixed_salary": "₹4 LPA",
+      "variable_salary": "₹1 LPA",
+      "languages": "English and Tamil",
+      "description": "Guide students and parents through the admissions journey and help them make informed career decisions.",
+      "highlights": [
+        "Counsel students and parents through calls, sessions and program walkthroughs.",
+        "Explain programs, university partners, fees, scholarships and career outcomes.",
+        "Guide students from inquiry to enrollment and own admissions targets."
+      ],
+      "requirements": [
+        "Any graduate with strong communication skills in English and Tamil.",
+        "Interest in sales, counselling and talking to students and parents.",
+        "Target-driven, eager to learn and comfortable in a fast-paced role."
+      ],
+      "application_url": "https://script.google.com/macros/s/AKfycbwMUs8jnHRszh_XkLefUL2qIJ5FLsNb29a5K8j-JkmXavL1JrUVEN1fXvp_eu-kbKvE/exec",
+      "jd_url": "https://drive.google.com/file/d/1lXNW2fbMQFvQFrOl-Y4fJEi_Yt8Cviv-/view"
+    }
+  ]
+}
