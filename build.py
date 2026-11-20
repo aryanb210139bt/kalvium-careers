@@ -181,8 +181,8 @@ body{{display:flex;flex-direction:column;height:100dvh;overflow:hidden}}
   <a class="back" href="{esc(url)}">← Back to job</a>
 </div>
 <div class="frame">
-  <div class="load" id="load">Loading application form…</div>
-  <iframe src="{form}" title="Application form" allow="clipboard-write" onload="document.getElementById('load').style.display='none'"></iframe>
+  <div class="load">Loading application form…</div>
+  <iframe src="{form}" title="Application form" allow="clipboard-write"></iframe>
 </div>
 </body></html>
 """
