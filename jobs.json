@@ -5,7 +5,8 @@
     "share_title": "We're Hiring at Kalvium!",
     "headline": "WE'RE HIRING!",
     "subhead": "Be a part of the Kalvium Team!",
-    "default_description": "Join the Kalvium team. Explore open roles and apply online."
+    "default_description": "Join the Kalvium team. Explore open roles and apply online.",
+    "interest_endpoint": "https://script.google.com/macros/s/AKfycbwMUs8jnHRszh_XkLefUL2qIJ5FLsNb29a5K8j-JkmXavL1JrUVEN1fXvp_eu-kbKvE/exec"
   },
   "jobs": [
     {
@@ -38,7 +39,8 @@
         "Target-driven, eager to learn and comfortable in a fast-paced role."
       ],
       "application_url": "https://script.google.com/macros/s/AKfycbwMUs8jnHRszh_XkLefUL2qIJ5FLsNb29a5K8j-JkmXavL1JrUVEN1fXvp_eu-kbKvE/exec",
-      "jd_url": "https://drive.google.com/file/d/115_Tqv29_ge3HjiSu2LdeNNFUN9s763l/view"
+      "jd_url": "https://drive.google.com/file/d/115_Tqv29_ge3HjiSu2LdeNNFUN9s763l/view",
+      "short_link": "noida"
     },
     {
       "slug": "academic-relationship-manager-bengaluru",
@@ -70,7 +72,8 @@
         "Target-driven, eager to learn and comfortable in a fast-paced role."
       ],
       "application_url": "https://script.google.com/macros/s/AKfycbwMUs8jnHRszh_XkLefUL2qIJ5FLsNb29a5K8j-JkmXavL1JrUVEN1fXvp_eu-kbKvE/exec",
-      "jd_url": "https://drive.google.com/file/d/1tVtbv_JtXBC1XIw-8fINbi7LtO6bFfDW/view"
+      "jd_url": "https://drive.google.com/file/d/1tVtbv_JtXBC1XIw-8fINbi7LtO6bFfDW/view",
+      "short_link": "bengaluru"
     },
     {
       "slug": "academic-relationship-manager-coimbatore",
@@ -102,7 +105,8 @@
         "Target-driven, eager to learn and comfortable in a fast-paced role."
       ],
       "application_url": "https://script.google.com/macros/s/AKfycbwMUs8jnHRszh_XkLefUL2qIJ5FLsNb29a5K8j-JkmXavL1JrUVEN1fXvp_eu-kbKvE/exec",
-      "jd_url": "https://drive.google.com/file/d/1lXNW2fbMQFvQFrOl-Y4fJEi_Yt8Cviv-/view"
+      "jd_url": "https://drive.google.com/file/d/1lXNW2fbMQFvQFrOl-Y4fJEi_Yt8Cviv-/view",
+      "short_link": "coimbatore"
     }
   ]
 }

@@ -77,6 +77,9 @@ h2{margin-top:22px}
   <label>Full JD link</label><input name="jd_url" placeholder="https://drive.google.com/…">
   <div class="row">
     <div><label>URL slug <em>*</em></label><input name="slug" placeholder="auto from title + city"><div class="hint">Lowercase, hyphens. Never change it after sharing.</div></div>
+    <div><label>Short form link</label><input name="short_link" placeholder="e.g. noida"><div class="hint">Optional. Creates a tiny "I'm interested" form at …/kalvium-careers/<b>noida</b>/ (needs a JD link).</div></div>
+  </div>
+  <div class="row">
     <div><label>Status</label><select name="status"><option value="active">active (live)</option><option value="draft">draft (hidden)</option><option value="closed">closed (stops applications)</option></select></div>
   </div>
 </form>
@@ -104,7 +107,7 @@ h2{margin-top:22px}
 </main>
 <script>
 var MODE_SHORT={"work from office":"WFO","remote":"Remote","hybrid":"Hybrid","work from home":"WFH"};
-var KEYS=["slug","status","title","poster_title","poster_subtitle","department","city","location","address","work_mode","employment_type","experience","experience_note","ctc","fixed_salary","variable_salary","languages","description","highlights","requirements","application_url","jd_url"];
+var KEYS=["slug","short_link","status","title","poster_title","poster_subtitle","department","city","location","address","work_mode","employment_type","experience","experience_note","ctc","fixed_salary","variable_salary","languages","description","highlights","requirements","application_url","jd_url"];
 var REQ=["title","poster_title","city","location","work_mode","experience","ctc","description","application_url","slug"];
 var f=document.getElementById('f'), tpl='', site={}, jobs=[], slugTouched=false;
 function esc(s){return String(s==null?'':s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;').replace(/'/g,'&#x27;');}

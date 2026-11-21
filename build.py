@@ -21,6 +21,7 @@ STATUSES = {"active", "closed", "draft"}
 REQUIRED = ["slug", "status", "title", "city", "location", "work_mode", "experience", "ctc",
             "description", "application_url"]
 MODE_SHORT = {"work from office": "WFO", "remote": "Remote", "hybrid": "Hybrid", "work from home": "WFH"}
+RESERVED = {"careers", "admin", "assets", "posters"}  # top-level folders a short_link can't use
 MAX_IMAGE_KB = 300  # WhatsApp is unreliable with large og:images; keep posters well under this
 
 
@@ -55,7 +56,7 @@ def find_chrome():
 
 
 def validate(data):
-    errors, seen = [], set()
+    errors, seen, seen_short = [], set(), set()
     site = data.get("site", {})
     if not str(site.get("base_url", "")).startswith("https://"):
         errors.append("site.base_url must be an https:// URL")
@@ -75,6 +76,17 @@ def validate(data):
         for k in ("application_url", "jd_url"):
             if j.get(k) and not str(j[k]).startswith("https://"):
                 errors.append(f"{name}: {k} must start with https://")
+        short = j.get("short_link", "")
+        if short:
+            if not re.fullmatch(r"[a-z0-9]+(?:-[a-z0-9]+)*", short) or short in RESERVED:
+                errors.append(f"{name}: short_link must be lowercase letters/numbers/hyphens and not one of {sorted(RESERVED)}")
+            if short in seen_short:
+                errors.append(f"{name}: duplicate short_link '{short}'")
+            seen_short.add(short)
+            if not j.get("jd_url"):
+                errors.append(f"{name}: short_link needs a jd_url (the short form links to the JD)")
+            if not str(site.get("interest_endpoint", "")).startswith("https://"):
+                errors.append("site.interest_endpoint (https) is needed for short_link forms")
     if errors:
         sys.exit("jobs.json has problems:\n  - " + "\n  - ".join(errors))
 
@@ -184,6 +196,114 @@ body{{display:flex;flex-direction:column;height:100dvh;overflow:hidden}}
   <div class="load">Loading application form…</div>
   <iframe src="{form}" title="Application form" allow="clipboard-write"></iframe>
 </div>
+</body></html>
+"""
+
+
+def build_interest_page(site, j, url, job_url, image, assets):
+    """Very short form: name, email, JD link and a 'read the JD & interested' tickbox.
+    Posts JSON straight to the Apps Script doPost (saved in the 'Interested' tab)."""
+    mode = MODE_SHORT.get(j["work_mode"].strip().lower(), j["work_mode"])
+    role = j.get("poster_title") or j["title"]
+    payload = json.dumps({"role": j["title"], "city": j["city"], "jd": j["jd_url"],
+                          "endpoint": site["interest_endpoint"]}, ensure_ascii=False).replace("</", "<\\/")
+    return f"""<!doctype html>
+<html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>{esc(f'{role} – {j["city"]} | {site["site_name"]}')}</title>
+<meta name="description" content="{esc(share_description(j))}">
+<link rel="canonical" href="{esc(url)}">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="{esc(site["site_name"])}">
+<meta property="og:title" content="{esc(site["share_title"])}">
+<meta property="og:description" content="{esc(share_description(j))}">
+<meta property="og:url" content="{esc(url)}">
+<meta property="og:image" content="{esc(image)}">
+<meta property="og:image:secure_url" content="{esc(image)}">
+<meta property="og:image:type" content="image/jpeg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="{esc(site["share_title"])}">
+<meta name="twitter:description" content="{esc(share_description(j))}">
+<meta name="twitter:image" content="{esc(image)}">
+<meta name="theme-color" content="#0A0A0C">
+<link rel="icon" type="image/png" href="{assets}/favicon.png">
+<link rel="stylesheet" href="{assets}/site.css">
+<style>
+.in{{max-width:560px}}
+.poster{{margin:4px 0 22px}}
+h1{{font-size:clamp(26px,6vw,34px);margin:0 0 6px}}
+.meta{{color:#C9C9CF;font-size:15.5px}}
+.box{{background:var(--s1);border:1px solid var(--line);border-radius:18px;padding:20px;margin-top:20px}}
+.jd{{display:flex;align-items:center;justify-content:space-between;gap:14px}}
+.jd b{{display:block;font-size:16px}}.jd span{{color:var(--mute);font-size:14px}}
+.jd .btn{{min-height:44px;padding:0 20px;flex:none}}
+label.l{{display:block;font-size:14px;font-weight:600;color:#D6D6DB;margin:0 0 6px}}
+.f{{margin-bottom:16px}}
+input[type=text],input[type=email]{{width:100%;background:var(--s2);border:1px solid var(--line);border-radius:12px;color:var(--txt);font:inherit;font-size:16px;padding:13px 14px}}
+input:focus{{outline:2px solid rgba(242,35,42,.65);border-color:transparent}}
+.tick{{display:flex;gap:12px;align-items:flex-start;cursor:pointer;padding:14px;border:1px solid var(--line);border-radius:12px;background:var(--s2);font-size:15px;line-height:1.45}}
+.tick input{{width:22px;height:22px;accent-color:var(--red);flex:none;margin-top:1px}}
+.err{{color:#FF6B6F;font-size:14px;min-height:20px;margin:8px 0 4px}}
+button.btn{{width:100%;border:0;cursor:pointer;font:inherit;font-weight:700;font-size:16px}}
+button.btn[disabled]{{opacity:.6;cursor:wait}}
+.done{{text-align:center;padding:26px 10px}}
+.done .ok{{width:56px;height:56px;border-radius:50%;background:var(--red);display:flex;align-items:center;justify-content:center;margin:0 auto 14px;font-size:28px}}
+.done h2{{font-size:22px;margin-bottom:6px}}.done p{{color:#C9C9CF}}
+.hp{{position:absolute;left:-9999px;width:1px;height:1px;overflow:hidden}}
+@media (max-width:420px){{.jd{{flex-direction:column;align-items:stretch}}.jd .btn{{width:100%}}}}
+</style></head>
+<body>
+<header class="top"><div class="in"><a class="brand" href="{esc(job_url)}"><img src="{assets}/kalvium-logo.png" alt="Kalvium logo">Kalvium <span>Careers</span></a></div></header>
+<main class="in">
+  <img class="poster" src="{esc(image)}" width="1200" height="630" alt="Kalvium is hiring: {esc(role)}, {esc(j["city"])}">
+  <h1>{esc(role)} · {esc(j["city"])}</h1>
+  <div class="meta">{esc(j["city"])} ({esc(mode)}) · {esc(j["experience"])} · {esc(j["ctc"])}</div>
+
+  <div class="box jd">
+    <div><b>Job description</b><span>Please read it before you tick the box below.</span></div>
+    <a class="btn s" href="{esc(j["jd_url"])}" target="_blank" rel="noopener">Read the JD ↗</a>
+  </div>
+
+  <form class="box" id="f" novalidate>
+    <div class="f"><label class="l" for="name">Full name</label><input type="text" id="name" name="name" autocomplete="name" maxlength="120" required></div>
+    <div class="f"><label class="l" for="email">Email ID</label><input type="email" id="email" name="email" autocomplete="email" inputmode="email" maxlength="200" required></div>
+    <label class="tick"><input type="checkbox" id="ok" name="confirmed"><span>I have gone through the JD and I'm interested in this job role.</span></label>
+    <div class="hp" aria-hidden="true"><input type="text" name="website" tabindex="-1" autocomplete="off"></div>
+    <div class="err" id="err" role="alert"></div>
+    <button class="btn p" id="go" type="submit">I'm interested →</button>
+  </form>
+
+  <div class="box done" id="done" hidden>
+    <div class="ok">✓</div>
+    <h2>Thank you, <span id="dn"></span>!</h2>
+    <p>We've noted your interest. Our team will reach out to you on <b id="de"></b>.</p>
+  </div>
+</main>
+<footer class="foot"><div class="in">© Kalvium · <a href="{esc(job_url)}">Full job details</a></div></footer>
+<script>
+var J={payload};
+var f=document.getElementById('f'),err=document.getElementById('err'),go=document.getElementById('go');
+f.addEventListener('submit',function(e){{
+  e.preventDefault();
+  var nm=document.getElementById('name'),n=nm.value.trim(),m=f.email.value.trim();
+  if(!n){{err.textContent='Please enter your full name.';nm.focus();return;}}
+  if(!/^\\S+@\\S+\\.\\S+$/.test(m)){{err.textContent='Please enter a valid email ID.';f.email.focus();return;}}
+  if(!f.confirmed.checked){{err.textContent='Please tick the box to confirm you have read the JD.';return;}}
+  err.textContent='';go.disabled=true;go.textContent='Sending…';
+  fetch(J.endpoint,{{method:'POST',headers:{{'Content-Type':'text/plain;charset=utf-8'}},
+    body:JSON.stringify({{name:n,email:m,confirmed:true,role:J.role,city:J.city,jd:J.jd,website:f.website.value}})}})
+  .then(function(r){{return r.json();}})
+  .then(function(r){{
+    if(!r.ok)throw new Error(r.error||'Something went wrong.');
+    document.getElementById('dn').textContent=n.split(' ')[0];document.getElementById('de').textContent=m;
+    f.hidden=true;document.getElementById('done').hidden=false;
+  }})
+  .catch(function(x){{err.textContent=(x&&x.message&&x.message.indexOf('Please')===0)?x.message:'Could not send right now. Please check your internet and try again.';
+    go.disabled=false;go.textContent="I'm interested →";}});
+}});
+</script>
 </body></html>
 """
 
@@ -306,6 +426,12 @@ def main():
                                                    encoding="utf-8")
         built.append(j)
         report.append(f'  {j["status"]:<6} {url}   (poster {kb:.0f} KB)')
+        if j["status"] == "active" and j.get("short_link"):
+            short_url = f'{base}/{j["short_link"]}/'
+            (OUT / j["short_link"]).mkdir()
+            (OUT / j["short_link"] / "index.html").write_text(
+                build_interest_page(site, j, short_url, url, image, f"{base}/assets"), encoding="utf-8")
+            report.append(f'  form   {short_url}')
 
     active = [j for j in built if j["status"] == "active"]
     cities = list(dict.fromkeys(j["city"] for j in active))
