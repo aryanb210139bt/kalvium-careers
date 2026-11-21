@@ -64,6 +64,26 @@ The preview line is built automatically as **Title | City (WFO) | Experience | C
 
 ---
 
+## Short "I'm interested" form
+
+Give a job a `short_link` (for example `"noida"`) and a `jd_url`, and the build creates a tiny form at `…/kalvium-careers/noida/`. The form has:
+- Full name
+- Email ID
+- a **Read the JD** button
+- a required tickbox: *"I have gone through the JD and I'm interested in this job role."*
+
+The page shows the same poster card in WhatsApp. Responses land in the **Interested** tab of the responses Sheet. The columns are Submitted At, Name, Email, Role, City, JD Link, Read JD & Interested and Status (New / Contacted / Applied / Not interested).
+
+Answers are sent to the Apps Script web app (`doPost` in `Code.gs`), whose address is `site.interest_endpoint` in `jobs.json`.
+
+| City | Short form |
+|---|---|
+| Noida | https://aryanb210139bt.github.io/kalvium-careers/noida/ |
+| Bengaluru | https://aryanb210139bt.github.io/kalvium-careers/bengaluru/ |
+| Coimbatore | https://aryanb210139bt.github.io/kalvium-careers/coimbatore/ |
+
+---
+
 ## Sharing on WhatsApp
 
 1. Copy the job's link, e.g. `https://aryanb210139bt.github.io/kalvium-careers/careers/academic-relationship-manager-noida/`.
